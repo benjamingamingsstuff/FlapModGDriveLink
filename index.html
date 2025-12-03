@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FlapMod Drive Auth</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #4285F4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FlapMod Drive Connector</h1>
+    <p>This URL is used for Google Drive connecting ONLY.</p>
+    <div id="status"></div>
+    <button id="loginBtn" class="btn" onclick="startAuth()">Connect Google Drive</button>
+
+    <script>
+        const CLIENT_ID = '704025451444-ctq3jevmbibdgqfotd5680ejgp2v4700.apps.googleusercontent.com';
+        const REDIRECT_URI = 'https://fbflapmod.vercel.app'; // Vercel URL
+        const SCOPE = 'https://www.googleapis.com/auth/drive.file';
+
+        function startAuth() {
+            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}&include_granted_scopes=true&state=pass-through-value`;
+            window.location.href = authUrl;
+        }
+
+        // Check for token in hash
+        function checkToken() {
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const accessToken = params.get('access_token');
+
+            if (accessToken) {
+                document.getElementById('status').innerText = 'Authenticated! Redirecting to app...';
+                document.getElementById('loginBtn').style.display = 'none';
+
+                // Redirect to app
+                window.location.href = `flap://auth?access_token=${accessToken}`;
+            }
+        }
+
+        window.onload = checkToken;
+    </script>
+</body>
+
+</html>
