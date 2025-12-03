@@ -29,14 +29,14 @@
 
 <body>
     <h1>FlapMod Drive Connector</h1>
-    <p>This URL is used for Google Drive connecting ONLY. you should have only gotten here from your modded Flappy Bird that has FlapMod.</p>
+    <p>This URL is used for Google Drive connecting ONLY.</p>
     <div id="status"></div>
     <button id="loginBtn" class="btn" onclick="startAuth()">Connect Google Drive</button>
 
     <script>
         const CLIENT_ID = '704025451444-ctq3jevmbibdgqfotd5680ejgp2v4700.apps.googleusercontent.com';
-        const REDIRECT_URI = 'https://fbflapmod.vercel.app'; // Vercel URL
-        const SCOPE = 'https://www.googleapis.com/auth/drive.file';
+        const REDIRECT_URI = 'https://fbflapmod.vercel.app/'; // Vercel URL
+        const SCOPE = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email';
 
         function startAuth() {
             const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}&include_granted_scopes=true&state=pass-through-value`;
